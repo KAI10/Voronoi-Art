@@ -318,34 +318,34 @@ bool isSameSide_not_Intersect(int cside, int startside, int endside){
 }
 
 void process_new_site(Point site){
-    cout<<"\n\n\n";
+    //cout<<"\n\n\n";
     Cell newcell(site); //line 4
-    cout<<"checking diagram for new site ";
-    site.print();
-    cout<<"\n";
+    //cout<<"checking diagram for new site ";
+    //site.print();
+    //cout<<"\n";
     int op = 0;
     for(int i = 0; i<C.size(); ++i){ //line 5
         Cell c = C[i];
-        cout<<"\n\n";
+        //cout<<"\n\n";
         op++;
         Edge seg(c.site,site);
-        seg.print("line_segment_connecting_two_sites");
+        //seg.print("line_segment_connecting_two_sites");
         Edge pb = seg.findPerpendicularBisector();
-        pb.print("perpendicular_bisector"); //line 6 -> upto this seems correct
+        //pb.print("perpendicular_bisector"); //line 6 -> upto this seems correct
 
         vector<Point>X; //line 7
         vector<int>toDelete;
 
         for(int i = 0; i<(int)c.regionEdges.size(); ++i){
-            cout<<"\n";
-            cout<<"Will test spatial relationship\n";
+            //cout<<"\n";
+            //cout<<"Will test spatial relationship\n";
             Edge e = c.regionEdges[i];
-            e.print("cell_edge_e");
+            //e.print("cell_edge_e");
             //each e is a segment
             pair<bool,Point>Ipoint = e.Intersect(pb);
 
             if(Ipoint.first==false){
-                cout<<"edge and pb does not intersect, so both endpoint must be in same side\n";
+                //cout<<"edge and pb does not intersect, so both endpoint must be in same side\n";
                 //does not intersect...
                 //if both in same side as c site then keep the edge
                 int cside = pb.getSide(c.site);
@@ -353,20 +353,20 @@ void process_new_site(Point site){
                 int edgeendside = pb.getSide(e.ed);
 
                 if( !isSameSide_not_Intersect(cside,edgestartside,edgeendside) ){
-                    c.site.print();
-                    cout<<" is not in the same side as ";
-                    e.st.print();
-                    cout<<" with respect to pb\n";
+                    //c.site.print();
+                    //cout<<" is not in the same side as ";
+                    //e.st.print();
+                    //cout<<" with respect to pb\n";
                     //delete this e
                     toDelete.push_back(i);
-                    cout<<"will delete this edge\n";
+                    //cout<<"will delete this edge\n";
                 }
                 //if both in same side as site then delete the edge
             }
             else{
-                cout<<"edge and pb intersects at ";
-                Ipoint.second.print();
-                cout<<"\n";
+                //cout<<"edge and pb intersects at ";
+                //Ipoint.second.print();
+                //cout<<"\n";
                 //intersects.. so, start and end point of edge e will change
                 int cside = pb.getSide(c.site);
                 int edgestartside = pb.getSide(e.st);
@@ -386,8 +386,8 @@ void process_new_site(Point site){
                     if(cside==edgestartside)e.clip(Ipoint.second,1);
                     else e.clip(Ipoint.second,0);
 
-                    cout<<"edge is clipped to be ";
-                    e.print("cell_edge_e");
+                    //cout<<"edge is clipped to be ";
+                    //e.print("cell_edge_e");
                     c.regionEdges[i] = e;
                 }
 
@@ -396,7 +396,7 @@ void process_new_site(Point site){
         }
 
         for(int i = toDelete.size()-1; i>=0; --i){
-            cout<<"deleting...............\n";
+            //cout<<"deleting...............\n";
             int curdelIdx = toDelete[i];
             c.regionEdges.erase(c.regionEdges.begin()+curdelIdx);
         }
@@ -424,15 +424,15 @@ void process_new_site(Point site){
         }
 
         C[i] = c;
-        cout<<"cell status\n";
-        C[i].print_console(-1);
-        cout<<"\n";
+        //cout<<"cell status\n";
+        //C[i].print_console(-1);
+        //cout<<"\n";
 
-        cout<<"newcell status\n";
-        newcell.print_console(-1);
-        cout<<"\n";
+        //cout<<"newcell status\n";
+        //newcell.print_console(-1);
+        //cout<<"\n";
     }
-    cout<<op<<"\n";
+    //cout<<op<<"\n";
     C.push_back(newcell);
     return;
 }
