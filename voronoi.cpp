@@ -2,6 +2,7 @@
 #define LEFT -1
 #define RIGHT 1
 #define eps 1e-10
+#define PI acos(-1.0)
 #define BORDER_DIS 4
 using namespace std;
 
@@ -27,6 +28,70 @@ struct Point{
         cout<<"("<<x<<","<<y<<")";
     }
 };
+
+Point findCentroid(vector<Point> points) {
+    double x = 0;
+    double y = 0;
+    for (Point p : points) {
+        x += p.x;
+        y += p.y;
+    }
+    Point center(0.0, 0.0);
+    center.x = x / (double)((int)points.size());
+    center.y = y / (double)((int)points.size());
+    return center;
+}
+
+double get_angle(Point p, Point centroid){
+    double a = atan2(centroid.y-p.y,centroid.x-p.x);
+    double a_deg = (180.0/PI)*a;
+    return a_deg;
+}
+
+vector<Point> sortVerticies(vector<Point> points) {
+    // get centroid
+    Point center = findCentroid(points);
+    //center.print();
+    //cout<<"\n";
+    vector< pair<double,int> >angle_sorter;
+
+    int idx = 0;
+    for(Point p: points){
+        angle_sorter.push_back(make_pair(get_angle(p,center),idx));
+        idx = idx+1;
+    }
+
+    //cout<<"angle push korsi\n";
+
+    sort(angle_sorter.begin(),angle_sorter.end());
+
+    vector<Point>sorted_points;
+
+    int cursz = 0;
+
+    for(auto info: angle_sorter){
+        int id = info.second;
+        //cout<<id<<"\n";
+        Point cur = points[id];
+        //cur.print();
+        //cout<<"\n";
+        if(cursz>0){
+            Point last = sorted_points[cursz-1];
+            double dd = last.dist(cur);
+
+            if(dd>eps){
+                sorted_points.push_back(cur);
+                cursz++;
+            }
+        }
+        else{
+            sorted_points.push_back(cur);
+            cursz++;
+        }
+    }
+
+    return sorted_points;
+}
 
 struct Edge{
 
@@ -225,20 +290,23 @@ struct Cell{
     }
 
     void print(int id){
-        //ofstream fout("test.out");
 
-        //fout<<"Printing cell info id: "<<id<<"\n";
-        //fout<<"Site Point is: "<<site.x<<","<<site.y<<"\n";
         if(regionEdges.size() <= 0) return;
 
+        vector<Point>all_p;
+
+        for(Edge e: regionEdges){
+            all_p.push_back(e.st);
+            all_p.push_back(e.ed);
+        }
+
+        vector<Point> poly_p = sortVerticies(all_p);
 
         fout << "[ ";
-        for(int i = 0; i<regionEdges.size(); ++i){
-            Edge e = regionEdges[i];
-            Point p1 = e.st;
-            Point p2 = e.ed;
-            fout<< "(" << p1.x<<","<<p1.y<<"), ("<<p2.x<<","<<p2.y<<")";
-            if (i == regionEdges.size() - 1) fout << "]";
+        for(int i = 0; i<poly_p.size(); ++i){
+            Point p1 = poly_p[i];
+            fout<< "(" << p1.x<<","<<p1.y<<")";
+            if (i == poly_p.size() - 1) fout << "]";
             else fout << ", ";
         }
 
@@ -465,7 +533,6 @@ int main(){
     }
 
     /*ofstream fout("test.out");
-
     fout << "[ ";
     for(int i = 0; i<E.size(); ++i){
         Edge e = E[i];
