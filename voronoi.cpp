@@ -201,7 +201,27 @@ struct Cell{
 
     void addEdge(Edge e){
 
-        if(!e.is_Degenerate())regionEdges.push_back(e);
+        if(!e.is_Degenerate()){
+
+            bool flag = true;
+            for(Edge f: regionEdges){
+
+                Point x = f.st;
+                Point y = f.ed;
+
+                if( x.dist(e.st)<eps && y.dist(e.ed)<eps ){
+                    flag = false;
+                    break;
+                }
+
+                else if(x.dist(e.ed)<eps && y.dist(e.st)<eps){
+                    flag = false;
+                    break;
+                }
+            }
+
+            if(flag)regionEdges.push_back(e);
+        }
     }
 
     void print(int id){
