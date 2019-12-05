@@ -10,14 +10,13 @@ from skimage.io import imread
 
 def read_image(file_name):
     img = img_as_float(imread(file_name))  # height x width x channels
-    # img = img_as_float(astronaut())
     img = np.swapaxes(img, 0, 1)  # width x height x channels
     # print(type(img), img.shape)
     return img
 
 
 def get_representative_points(img):
-    segments_slic = slic(img, n_segments=2000, compactness=10, sigma=1)
+    segments_slic = slic(img, n_segments=3000, compactness=10, sigma=1)
     # print("SLIC number of segments: ", len(np.unique(segments_slic)))
 
     clusters = np.unique(segments_slic)

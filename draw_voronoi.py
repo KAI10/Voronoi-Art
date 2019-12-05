@@ -12,12 +12,8 @@ def read_voronoi_info():
     with open('test.out', 'r') as voronoi_output:
         pointLists = [eval(line) for line in voronoi_output.readlines()]
 
-    polygons = []
-    for pointList in pointLists:
-        polygons.append(pointList + [pointList[0]])
-
     colors = np.load('site_colors.npy')
-    return polygons, colors, width, height
+    return pointLists[4:], colors, width, height
 
 
 def draw_voronoi(polygons, colors, image_width, image_height):
