@@ -12,3 +12,9 @@ The solution process works in two steps. They are described here.
 1. Install the required python packages `pip install -r requirements.txt`
 2. To run the Python Implementation: `python voronoi_art.py <image file> <# of site points>`
 3. For the Python + cpp Implementation: `bash voronoi_art.sh <image file> <# of site points>`
+
+## Sample Input-Output
+![](data/Gabe2005.jpg) ![](data/Gabe2005_voronoi.jpg)
+![](data/monalisa.jpg) ![](data/monalisa_voronoi.jpg)
+![](data/uva.jpeg) ![](data/uva_voronoi.jpeg)
+![](data/Great_Wave_off_Kanagawa2.jpg) ![](data/Great_Wave_off_Kanagawa2_voronoi.jpg)
