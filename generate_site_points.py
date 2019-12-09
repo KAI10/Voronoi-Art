@@ -51,10 +51,10 @@ def save_site_points_colors(img, points, colors):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print('Usage: python generate_site_points.py <image_file_name>')
+    if len(sys.argv) < 3:
+        print('Usage: python voronoi_art.py <image file name> <# of site points>')
         exit(0)
 
     img = read_image(sys.argv[1])
-    points, colors = get_representative_points(img)
+    points, colors = get_representative_points(img, int(sys.argv[2]))
     save_site_points_colors(img, points, colors)

@@ -3,7 +3,7 @@ g++ voronoi.cpp -o voronoi.out
 printf "Compiled.\n"
 
 printf "Generating site points from image ... "
-python generate_site_points.py $1
+python generate_site_points.py $1 $2
 printf "Generated.\n"
 
 printf "Generating Voronoi Polygons ... "
