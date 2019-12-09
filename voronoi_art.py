@@ -20,7 +20,7 @@ def read_image(file_name):
 
 
 def get_representative_points(img):
-    segments_slic = slic(img, n_segments=5000, compactness=10, sigma=1)
+    segments_slic = slic(img, n_segments=3500, compactness=10, sigma=1)
     print("SLIC number of segments: ", len(np.unique(segments_slic)))
 
     clusters = np.unique(segments_slic)
@@ -58,9 +58,9 @@ def draw_voronoi_diagram(points, colors):
 
     plt.xlim([0, img.shape[0]]), plt.ylim([0, img.shape[1]])
     plt.gca().invert_yaxis()
-    # plt.axis('off')
+    plt.axis('off')
 
-    plt.savefig('voronoi_output.png')
+    plt.savefig('voronoi_output.png', bbox_inches='tight', pad_inches=0)
     plt.show()
 
 

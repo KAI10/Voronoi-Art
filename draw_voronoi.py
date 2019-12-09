@@ -22,7 +22,9 @@ def draw_voronoi(polygons, colors, image_width, image_height):
 
     plt.xlim([0, image_width]), plt.ylim([0, image_height])
     plt.gca().invert_yaxis()
-    plt.savefig('voronoi_output.png')
+    plt.axis('off')
+
+    plt.savefig('voronoi_output.png', bbox_inches='tight', pad_inches=0)
     plt.show()
 
 
