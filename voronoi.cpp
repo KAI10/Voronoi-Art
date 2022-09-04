@@ -1,4 +1,10 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <cmath>
+#include <fstream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
 #define LEFT -1
 #define RIGHT 1
 #define eps 1e-10
